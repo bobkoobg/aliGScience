@@ -18,10 +18,10 @@ public class AliGCalculator {
     private void helloWorld() {
         System.out.println( "Techmology, Wha is it all about?"
                 + "\nis it GOOD or is it WAK?" );
-        int[] a = { 3, 9, 3, 1, 2, 3 };
-        int[] b = { 5, 7, 3, 4, 7 };
+        int[] a = { 9, 0, 0, 0 };
+        int[] b = { 9, 9, 9, 9 };
 
-        List<Integer> result = calculate( a, b, operations[ 0 ] );
+        List<Integer> result = calculate( a, b, operations[ 1 ] );
 
         for ( int i = 0; i < result.size(); i++ ) {
             System.out.println( "i:" + i + "/>" + result.get( i ) );
@@ -43,9 +43,19 @@ public class AliGCalculator {
         for ( int i = 0; i < eL; i++ ) {
             if ( i < aL && i < bL ) {
 
-                if ( operation.equals( operations[ 0 ] ) ) {
-                    opRes = a[ i ] + b[ i ] + remainder;
+                if ( operation.equals( operations[ 0 ] )
+                        || operation.equals( operations[ 1 ] ) ) {
+
+                    if ( operation.equals( operations[ 0 ] ) ) {
+                        opRes = a[ i ] + b[ i ] + remainder;
+                    } else if ( operation.equals( operations[ 1 ] ) ) {
+                        System.out.println( "DEVIDE" );
+                        opRes = a[ i ] - b[ i ] - remainder;
+                    }
                     remainder = 0;
+                    if ( opRes < 0 ) {
+                        remainder = 1;
+                    }
 
                     List<Integer> opResList = splitResultToList( opRes );
 
@@ -55,14 +65,30 @@ public class AliGCalculator {
                     result.add( opResList.get( 0 ) );
                 }
             } else {
-                if ( operation.equals( operations[ 0 ] ) ) {
+                System.out.println( "ELSE" );
+                if ( operation.equals( operations[ 0 ] )
+                        || operation.equals( operations[ 1 ] ) ) {
                     if ( i < aL || i < bL ) {
                         if ( i >= bL ) {
+                            if ( operation.equals( operations[ 0 ] ) ) {
+                                opRes = a[ i ] + remainder;
 
-                            opRes = a[ i ] + remainder;
+                            } else if ( operation.equals( operations[ 1 ] ) ) {
+                                opRes = a[ i ] - remainder;
+                                if ( opRes < 0 ) {
+                                    opRes = 20 + opRes; //opRes will be negative 
+                                }
+                            }
                         } else if ( i >= aL ) {
+                            if ( operation.equals( operations[ 0 ] ) ) {
+                                opRes = b[ i ] + remainder;
 
-                            opRes = b[ i ] + remainder;
+                            } else if ( operation.equals( operations[ 1 ] ) ) {
+                                opRes = b[ i ] - remainder;
+                                if ( opRes < 0 ) {
+                                    opRes = 20 + opRes; //opRes will be negative 
+                                }
+                            }
                         }
                         remainder = 0;
 
@@ -73,11 +99,13 @@ public class AliGCalculator {
                         }
                         result.add( opResList.get( 0 ) );
 
-                    } else {
-                        System.out.println( "Nobody has more elements" );
                     }
                 }
             }
+        }
+
+        if ( remainder > 0 ) {
+            result.add( remainder );
         }
 
         return result;
