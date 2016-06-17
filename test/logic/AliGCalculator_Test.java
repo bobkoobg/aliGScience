@@ -1,5 +1,6 @@
 package logic;
 
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
@@ -16,8 +17,8 @@ public class AliGCalculator_Test {
     @BeforeClass
     public static void setUpClass() {
         operations = new String[]{ "addition", "subtraction", "multiplication", "division" };
-        a = new int[]{ 1, 2, 3 };
-        b = new int[]{ 3, 4, 7 };
+        a = new int[]{ 5, 1, 0, 9, 4, 2, 3 };
+        b = new int[]{ 3, 8, 2, 0, 0, 6, 4, 7 };
     }
 
     @AfterClass
@@ -39,9 +40,10 @@ public class AliGCalculator_Test {
 
     @Test
     public void testBasic() {
-        int[] expected = { 1, 1, 6, 4 };
-        int[] result = aliGCalculator.calculate( a, b, operations[ 0 ] );
-        assertEquals( expected.length, result.length );
+        int[] expected = { 0, 7, 0, 0, 1, 3, 3, 4 };
+        List<Integer> result = aliGCalculator.calculate( a, b, operations[ 0 ] );
+
+        assertEquals( expected.length, result.size() );
     }
 
 }
